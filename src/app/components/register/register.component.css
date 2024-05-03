@@ -56,9 +56,11 @@
 .buttonspace{
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .btn{
+    display: block;
     font-family: 'Segoe UI';
     height: 4rem;
     width: 3rem;
@@ -76,11 +78,18 @@
 }
 
 .link{
+    margin-top: 1.75rem;
     background-color: #d9d9d9;
     font-size: 1.25rem;
     width: 100%;
+    height: 2rem;
+    text-decoration: none;
 }
 
 .link:hover {
     text-decoration-line: underline;
+}
+
+.link:visited{
+    color: #000;
 }
