@@ -1,12 +1,19 @@
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-bg-color);
+}
+
 .card{
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 2rem 4rem;
-    height: 670px;
-    width: 520px;
-    background-color: #d9d9d9;
+    padding: 4rem;
+    height: 550px;
+    width: 400px;
+    background-color: var(--form-bg-color);
     border-radius: 15px;
 }
 
@@ -56,11 +63,9 @@
 .buttonspace{
     display: flex;
     justify-content: center;
-    text-align: center;
 }
 
 .btn{
-    display: block;
     font-family: 'Segoe UI';
     height: 4rem;
     width: 3rem;
@@ -69,8 +74,8 @@
 }
 
 .success{
-    background-color: #363636;
-    color: #fff;
+    background-color: var(--main-bg-color);
+    color: white;
     width: 12rem;
     padding: 1rem 0.5rem;
     border-radius: 15px;
@@ -78,8 +83,10 @@
 }
 
 .link{
+    color: var(--main-bg-color);
+    text-align: center;
     margin-top: 1.75rem;
-    background-color: #d9d9d9;
+    background-color: var(--form-bg-color);
     font-size: 1.25rem;
     width: 100%;
     height: 2rem;
@@ -88,8 +95,4 @@
 
 .link:hover {
     text-decoration-line: underline;
-}
-
-.link:visited{
-    color: #000;
 }
