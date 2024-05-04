@@ -17,3 +17,159 @@
     align-items: center;
     background-color: var(--main-bg-color);
 }
+
+/* Estilos del cuestionario*/
+.question {
+    flex-direction: column;
+    width: 60%;
+}
+
+.question_header{
+    margin: 0 0 2.5rem 0;
+}
+
+.question_header .title{
+    font-family: 'Segoe UI Semibold';
+    text-align: center;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.question_header .subtitle{
+    font-family: 'Segoe UI';
+    text-align: center;
+    font-size: 3rem;
+    color: #fff;
+}
+
+.question_options{
+    width: 50%;
+    margin: 0 auto;
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+    justify-content: center;
+}
+
+.option{
+    height: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.option_checkbox{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: #BBBBBB;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.option_checkbox:hover{
+    transform: scale(1.08);
+}
+
+.option_checkbox:checked{
+    border: 6px solid #4ec652;
+    background-color: #63d767;
+}
+
+.option_label{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.option_label h6{
+    font-family: "Poppins",sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #48484e;
+}
+
+.option_label .fas {
+    font-size: 5rem;
+}
+
+.question_button{
+    display: flex;  
+    margin: 2rem auto;
+    width: 100%;
+}
+
+.question_button button{
+    font-family: 'Segoe UI';
+    background-color:#42428d;
+    color: #fff;
+    width: 10rem;
+    margin: 0 0 0 auto;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    cursor: pointer;
+}
+
+.question_button button:hover {
+    background-color:#6363ce;
+    transition: 0.7s;
+}
+
+@media screen and (max-width: 1536px) {
+    .question_options{
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width: 1400px) {
+    .question {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .question_options{
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .question_header .title{
+        font-size: 1.5rem;
+    }
+    
+    .question_header .subtitle{
+        font-size: 2rem;
+    }
+    
+    .question {
+        width: 80%;
+    }
+
+    .question_options{
+        width: 80%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .option{
+        height: 125px;
+        position: relative;
+    }
+
+    .option_label .fas {
+        font-size: 3rem;
+    }
+}
