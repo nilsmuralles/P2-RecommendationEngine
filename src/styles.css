@@ -101,6 +101,10 @@
     color: #48484e;
 }
 
+svg {
+    width: 65px;
+}
+
 .option_label .fas {
     font-size: 5rem;
 }
@@ -178,5 +182,9 @@
 
     .option_label .fas {
         font-size: 3rem;
+    }
+
+    svg {
+        width: 40px;
     }
 }
