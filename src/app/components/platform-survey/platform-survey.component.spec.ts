@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GenreSurveyComponent } from './genre-survey.component';
+import { PlatformSurveyComponent } from './platform-survey.component';
 
-describe('GenreSurveyComponent', () => {
-  let component: GenreSurveyComponent;
-  let fixture: ComponentFixture<GenreSurveyComponent>;
+describe('PlatformSurveyComponent', () => {
+  let component: PlatformSurveyComponent;
+  let fixture: ComponentFixture<PlatformSurveyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GenreSurveyComponent]
+      imports: [PlatformSurveyComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(GenreSurveyComponent);
+    fixture = TestBed.createComponent(PlatformSurveyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
