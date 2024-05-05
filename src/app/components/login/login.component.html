@@ -1,21 +1,21 @@
 <div class="container"> 
     <div class="card">
         <h1 class="title">BIENVENIDO</h1>
-        <form class="form" action="#">
+        <form class="form" (ngSubmit)="login(loginForm)" #loginForm="ngForm">
             <div class="inputspace">
                 <label for="email" class="subtitle">Correo</label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" [(ngModel)]="userOnLogin.email">
             </div>
             <div class="inputspace">
                 <label for="pass" class="subtitle">Contraseña</label>
-                <input type="password" id="pass" name="pass" required>
+                <input type="password" id="pass" name="pass" [(ngModel)]="userOnLogin.password">
             </div>
             <div class="inputspace">
                 <div class="buttonspace">
-                    <button type="submit" class="btn success" routerLink="/genre-survey">INICIAR SESIÓN</button>
+                    <button type="submit" class="btn success">INICIAR SESIÓN</button>
                 </div>
                 <div class="buttonspace">
-                    <a class="btn link" routerLink="/register">Crear una cuenta</a>
+                    <a class="btn link"  routerLink="/register">Crear una cuenta</a>
                 </div>
             </div>
         </form>     

@@ -20,4 +20,11 @@ export class UsersService {
     }
     return firstValueFrom(this.httpClient.post<any>(`${this.url}/add`, user, httpOptions));
   }
+
+  login(user: any){
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return firstValueFrom(this.httpClient.post<any>(`${this.url}/login`, user, httpOptions));
+  }
 }
