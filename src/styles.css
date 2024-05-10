@@ -1,5 +1,6 @@
 :root {
     --main-bg-color: #1d1d1d;
+    --gray-bg-color: #363636;
     --form-bg-color: #d9d9d9;
     font-size: 12px;
 }
@@ -10,12 +11,14 @@
     box-sizing: border-box;
 }
 
+body{
+    background-color: var(--main-bg-color);
+}
+
 .container{
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-bg-color);
 }
 
 /* Estilos del cuestionario*/

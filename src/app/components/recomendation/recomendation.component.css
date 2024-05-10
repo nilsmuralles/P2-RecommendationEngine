@@ -1,0 +1,127 @@
+.container{
+    font-family: 'Segoe UI Semibold';
+    color: var(--form-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.header{
+    display: flex;
+    padding: 0.75rem;
+    justify-content: space-between;
+    width: 100%;
+    height: 8rem;
+    background-color: var(--gray-bg-color);
+}
+
+.subcontainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo .icon{
+    font-size: 50px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+}
+
+.logo .icon:hover{
+    transform: scale(1.2);
+}
+
+
+.nav-options{
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.nav-links li{
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s;
+}
+
+.nav-links li:hover{
+    transform: scale(1.1);
+}
+
+.nav-links a{
+    font-size: 2rem;
+    color: var(--form-bg-color);
+    text-decoration: none;
+}
+
+.nav-links a:focus{
+    border-bottom: solid 2.5px var(--form-bg-color);
+}
+
+.search-nav{
+    margin: 4rem 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-bar{
+    color: var(--form-bg-color);
+    font-size: 2rem;
+    font-family: 'Segoe UI';
+    height: 4rem;
+    width: 35rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--gray-bg-color);
+}
+
+.search-bar:focus {
+    outline: 1px solid royalblue;
+}
+
+.cards-container{
+    display: grid;
+    margin: 1.5rem 1.5rem 4rem 1.5rem;
+    padding: 1px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2rem;
+}
+
+.game-card{
+    height: 16rem;
+    width: 90px;
+    border-radius: 1rem;
+    background-color: #363636;
+    font-size: 0.8rem;
+    font-family: 'Segoe UI';
+    padding: 0 0 1.5rem 0;
+    text-align: center;
+}
+
+.game-card img{
+    height: 128px;
+    width: 90px;
+}
+
+.subtitle{
+    font-size: 1.5rem;
+    display: block;
+    width: 75%;
+    text-align: left;
+}
