@@ -5,6 +5,7 @@ import { GenreSurveyComponent } from './components/genre-survey/genre-survey.com
 import { PlatformSurveyComponent } from './components/platform-survey/platform-survey.component';
 import { CategorySurveyComponent } from './components/category-survey/category-survey.component';
 import { RecomendationComponent } from './components/recomendation/recomendation.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 //Agregar las rutas respectivas por cada vista hecha
 export const routes: Routes = [
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path: 'platform-survey', component: PlatformSurveyComponent},
     {path: 'category-survey', component: CategorySurveyComponent},
     {path: 'recomendation', component: RecomendationComponent},
+    {path: 'page-not-found', component: PageNotFoundComponent},
 
     //Estas dos rutas siempre tienen que ir hasta abajo
     {path:'', redirectTo: '/login', pathMatch: 'full'},

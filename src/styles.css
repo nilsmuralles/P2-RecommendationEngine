@@ -22,6 +22,10 @@ body{
 }
 
 /* Estilos del cuestionario*/
+.question_container{
+    height: 100vh;
+}
+
 .question {
     flex-direction: column;
     width: 60%;
