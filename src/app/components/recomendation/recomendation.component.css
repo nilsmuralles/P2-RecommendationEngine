@@ -9,17 +9,18 @@
 
 .header{
     display: flex;
-    padding: 0.75rem;
+    padding: 2rem;
     justify-content: space-between;
     width: 100%;
     height: 8rem;
-    background-color: var(--gray-bg-color);
+    background-color: var(--gray-bg-color); 
 }
 
 .subcontainer{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    width: 75%;
 }
 
 .logo{
@@ -54,7 +55,8 @@
 
 .nav-links li{
     display: inline-block;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem;
+    padding-left: 4rem;
     transition: all 0.3s;
 }
 
@@ -63,7 +65,7 @@
 }
 
 .nav-links a{
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--form-bg-color);
     text-decoration: none;
 }
@@ -81,11 +83,11 @@
 
 .search-bar{
     color: var(--form-bg-color);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: 'Segoe UI';
     height: 4rem;
     width: 35rem;
-    padding: 0.75rem;
+    padding: 1rem;
     border: none;
     border-radius: 1rem;
     background-color: var(--gray-bg-color);
@@ -97,10 +99,8 @@
 
 .cards-container{
     display: grid;
-    margin: 1.5rem 1.5rem 4rem 1.5rem;
-    padding: 1px;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 1.5rem;
 }
 
 .game-card{
@@ -110,18 +110,41 @@
     background-color: #363636;
     font-size: 0.8rem;
     font-family: 'Segoe UI';
-    padding: 0 0 1.5rem 0;
     text-align: center;
 }
 
 .game-card img{
     height: 128px;
     width: 90px;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+}
+
+.game-card h4{
+    text-align: center;
+    white-space: nowrap;
+    overflow-x:hidden;
+    max-width: 90px;
+    padding: 0 12.5%;
+    scrollbar-width: none;
+    text-overflow: ellipsis;
+}
+ 
+.game-card h4:hover{
+    text-align: center;
+    white-space: nowrap;
+    overflow-x: scroll;
+    scroll-behavior: smooth ;
+    width: 90px;
+    padding: 0 12.5%;
+    scrollbar-width: none;
+    text-overflow: clip;
 }
 
 .subtitle{
     font-size: 1.5rem;
-    display: block;
-    width: 75%;
-    text-align: left;
+    border-bottom: 1px solid white;
+    border-bottom-width: thin;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
