@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faPowerOff, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-games-library',
@@ -14,6 +14,7 @@ import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 export class GamesLibraryComponent {
   faGamepad = faGamepad;
   faLogOut = faPowerOff;
+  faHeart = faHeart;
   games: { name: string, url: any }[] = [];
 
   constructor(private gameService: GamesService){}

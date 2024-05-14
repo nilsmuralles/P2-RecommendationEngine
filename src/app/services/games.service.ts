@@ -10,7 +10,7 @@ export class GamesService {
   private httpClient = inject(HttpClient);
   private apiUrl: String;
   //Juegos añadidos temporalmente mientras se llena la base de datos
-  public availableGames: string[] = ["Minecraft", "Fortnite", "Call of Duty", "Among Us", "Valorant"];
+  public availableGames: string[] = ["Minecraft", "Fortnite", "Call of Duty", "Among Us", "Valorant", "Undertale", "Deltarune", "Human Resource Machine", "Terraria"];
 
   constructor() { 
     this.apiUrl = 'http://localhost:8080/api/v1/games';

@@ -25,8 +25,8 @@ export class RecomendationComponent implements OnInit{
       const options = Object.entries(response).map(([name, url]) => ({ name, url }));
       options.forEach((option) => {
         if (option.name == name) {
-          console.log(option);
           this.games.push(option);
+          console.log(option);
         }
       })
     })
