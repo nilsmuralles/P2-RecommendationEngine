@@ -45,7 +45,7 @@ body{
 .question_header .subtitle{
     font-family: 'Segoe UI';
     text-align: center;
-    font-size: 3rem;
+    font-size: 2rem;
     color: #fff;
 }
 
@@ -61,7 +61,7 @@ body{
 }
 
 .option{
-    height: 200px;
+    height: 150px;
     width: 100%;
     position: relative;
 }
@@ -109,11 +109,11 @@ body{
 }
 
 svg {
-    width: 65px;
+    width: 4rem;
 }
 
 .option_label .fas {
-    font-size: 5rem;
+    font-size: 4rem;
 }
 
 .question_button{
