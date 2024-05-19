@@ -25,7 +25,6 @@ export class GamesLibraryComponent {
       const options = Object.entries(response).map(([name, url]) => ({ name, url }));
       options.forEach((option) => {
         if (option.name == name) {
-          console.log(option);
           this.games.push(option);
         }
       })

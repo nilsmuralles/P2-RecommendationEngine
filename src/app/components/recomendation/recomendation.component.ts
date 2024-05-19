@@ -19,14 +19,13 @@ export class RecomendationComponent implements OnInit{
 
   constructor(private gameService: GamesService){}
 
-  async ngOnInit(){
+  ngOnInit(){
     this.gameService.getAvailableGames().forEach(async name => {
       const response = await this.gameService.getGameCover(name);
       const options = Object.entries(response).map(([name, url]) => ({ name, url }));
       options.forEach((option) => {
         if (option.name == name) {
           this.games.push(option);
-          console.log(option);
         }
       })
     })

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card">
         <h1 class="title">REGISTRARSE</h1>
-        <form class="form" (ngSubmit)="saveUser(registerForm)" #registerForm="ngForm">
+        <form class="form" #registerForm="ngForm" (ngSubmit)="saveUser()">
             <div class="inputspace">
                 <label for="name" class="subtitle1">Nombre</label>
                 <input type="text" id="name" name="name" [(ngModel)]="userRegistered.name">

@@ -4,136 +4,136 @@
             <h1 class = "title">Antes de comenzar, nos gustaría saber más acerca de ti...</h1>
             <p class = "subtitle">¿Cuáles son tus géneros de videojuegos favoritos?</p>
         </div>
-        <div class="question_options">
+        <form class="question_options" [formGroup]="genreFeedback">
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre1">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre1" formControlName="racing">
                 <label class="option_label" for="genre1">
                     <fa-icon class="fas" [icon]="faCar"></fa-icon>
                     <h6>Racing</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre2">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre2" formControlName="roguelike">
                 <label class="option_label" for="genre2">
                     <fa-icon class="fas" [icon]="faHeart"></fa-icon>
                     <h6>Roguelike</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre3">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre3" formControlName="simulation">
                 <label class="option_label" for="genre3">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M481.2 64h-106c-14.5 0-26.6 11.8-26.6 26.3v39.6H163.3V90.3c0-14.5-12-26.3-26.6-26.3h-106C16.1 64 4.3 75.8 4.3 90.3v331.4c0 14.5 11.8 26.3 26.6 26.3h450.4c14.8 0 26.6-11.8 26.6-26.3V90.3c-.2-14.5-12-26.3-26.7-26.3zM149.8 355.8c-36.6 0-66.4-29.7-66.4-66.4 0-36.9 29.7-66.6 66.4-66.6 36.9 0 66.6 29.7 66.6 66.6 0 36.7-29.7 66.4-66.6 66.4zm212.4 0c-36.9 0-66.6-29.7-66.6-66.6 0-36.6 29.7-66.4 66.6-66.4 36.6 0 66.4 29.7 66.4 66.4 0 36.9-29.8 66.6-66.4 66.6z"/></svg>
                     <h6>Simulación</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre4">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre4" formControlName="metroidvania">
                 <label class="option_label" for="genre4">
                     <fa-icon class="fas" [icon]="faSkull"></fa-icon>
                     <h6>Metroidvania</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre5">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre5" formControlName="MMORPG">
                 <label class="option_label" for="genre5">
                     <fa-icon class="fas" [icon]="faShieldHalved"></fa-icon>
                     <h6>MMORPG</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre6">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre6" formControlName="sandbox">
                 <label class="option_label" for="genre6">
                     <fa-icon class="fas" [icon]="faPersonDigging"></fa-icon>
                     <h6>Sandbox</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre7">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre7" formControlName="puzzle">
                 <label class="option_label" for="genre7">
                     <fa-icon class="fas" [icon]="faPuzzlePiece"></fa-icon>
                     <h6>Puzzle</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre8">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre8" formControlName="arcade">
                 <label class="option_label" for="genre8">
                     <fa-icon class="fas" [icon]="faCoins"></fa-icon>
                     <h6>Arcade</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre9">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre9" formControlName="MOBA">
                 <label class="option_label" for="genre9">
                     <fa-icon class="fas" [icon]="faChessBoard"></fa-icon>
                     <h6>MOBA</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre10">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre10" formControlName="sports">
                 <label class="option_label" for="genre10">
                     <fa-icon class="fas" [icon]="faSoccerBall"></fa-icon>
                     <h6>Sports</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre11">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre11" formControlName="adventure">
                 <label class="option_label" for="genre11">
                     <fa-icon class="fas" [icon]="faMap"></fa-icon>
                     <h6>Adventure</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre12">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre12" formControlName="management">
                 <label class="option_label" for="genre12">
                     <fa-icon class="fas" [icon]="faPeopleRoof"></fa-icon>
                     <h6>Management</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre13">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre13" formControlName="threeD_platformer">
                 <label class="option_label" for="genre13">
                     <fa-icon class="fas" [icon]="faCube"></fa-icon>
                     <h6>3D Platformer</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre14">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre14" formControlName="visual_novel">
                 <label class="option_label" for="genre14">
                     <fa-icon class="fas" [icon]="faBook"></fa-icon>
                     <h6>Visual Novel</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre15">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre15" formControlName="survival">
                 <label class="option_label" for="genre15">
                     <fa-icon class="fas" [icon]="faCampground"></fa-icon>
                     <h6>Survival</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre16">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre16" formControlName="strategy">
                 <label class="option_label" for="genre16">
                     <fa-icon class="fas" [icon]="faLightbulb"></fa-icon>
                     <h6>Strategy</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre17">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre17" formControlName="JRPG">
                 <label class="option_label" for="genre17">
                     <fa-icon class="fas" [icon]="faDice"></fa-icon>
                     <h6>JRPG</h6>
                 </label>
             </div>
             <div class="option">
-                <input class="option_checkbox" type="checkbox" name="genres" id="genre18">
+                <input class="option_checkbox" type="checkbox" name="genres" id="genre18" formControlName="third_person_shooter">
                 <label class="option_label" for="genre18">
                     <fa-icon class="fas" [icon]="faGun"></fa-icon>
                     <h6>Shooter</h6>
                 </label>
             </div>
-        </div>
+        </form>
         <div class="question_button one_button">
-            <button type="submit" class="btn success" routerLink="/platform-survey">Siguiente</button>
+            <button type="submit" class="btn success" routerLink="/platform-survey" (click)="updateLikedGenres()">Siguiente</button>
         </div>
     </div>
 </div>
