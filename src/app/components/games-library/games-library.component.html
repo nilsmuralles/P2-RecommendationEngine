@@ -20,7 +20,7 @@
         <h3 class="subtitle">Tus juegos</h3>
         <section class="cards-container">
             <div class="game-card" *ngFor="let game of games">
-                <img [src] = "game.url" alt="">
+                <img [src] = "game.cover" alt="">
                 <h4>{{ game.name }}</h4>
                 <button class="add-btn">&hearts;</button>
             </div>

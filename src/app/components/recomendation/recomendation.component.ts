@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,22 +13,28 @@ import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './recomendation.component.css'
 })
 
-export class RecomendationComponent implements OnInit{
+export class RecomendationComponent implements OnInit {
+  games: Game[] = [];
   faGamepad = faGamepad;
   faLogOut = faPowerOff;
-  games: { name: string, url: any }[] = [];
 
-  constructor(private gameService: GamesService){}
+  constructor(private gameService: GamesService) { }
 
-  ngOnInit(){
-    this.gameService.getAvailableGames().forEach(async name => {
-      const response = await this.gameService.getGameCover(name);
-      const options = Object.entries(response).map(([name, url]) => ({ name, url }));
-      options.forEach((option) => {
-        if (option.name == name) {
-          this.games.push(option);
-        }
-      })
-    })
+  ngOnInit() {
+    this.gameService.getAllGames().subscribe(games => {
+      this.games = games;
+      this.loadGameCovers();
+    });
+  }
+
+  async loadGameCovers() {
+    for (const game of this.games) {
+      const coversResponse = await this.gameService.getGameCover(String(game.name)).toPromise();
+      if (coversResponse) {
+        const coversOptions = Object.entries(coversResponse).map(([name, url]) => ({ name, url }));
+        const selectedCover = coversOptions.find(option => option.name === game.name);
+        if (selectedCover) { game.cover = selectedCover.url;}
+      }
+    }
   }
 }

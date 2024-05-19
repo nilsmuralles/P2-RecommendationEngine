@@ -1,27 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Game } from '../models/Game.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class GamesService {
+  private apiUrl: string;
 
-  private httpClient = inject(HttpClient);
-  private apiUrl: String;
-  //Juegos añadidos temporalmente mientras se llena la base de datos
-  public availableGames: string[] = ["Minecraft", "Fortnite", "Call of Duty", "Among Us", "Valorant", "Undertale", "Deltarune", "Human Resource Machine", "Terraria"];
-
-  constructor() { 
+  constructor(private httpClient: HttpClient) { 
     this.apiUrl = 'http://localhost:8080/api/v1/games';
   }
 
-  getGameCover(name: any){
-    return firstValueFrom(this.httpClient.get<any>(`${this.apiUrl}/covers/${name}`));
+  getAllGames(): Observable<Game[]> {
+    return this.httpClient.get<Game[]>(`${this.apiUrl}/all`);
   }
-
-  getAvailableGames() {
-    return this.availableGames;
+  
+  getGameCover(name: string): Observable<string> {
+    return this.httpClient.get<string>(`${this.apiUrl}/covers/${name}`);
   }
-
 }
