@@ -15,6 +15,7 @@ import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 
 export class RecomendationComponent implements OnInit {
   games: Game[] = [];
+  gameCovers: { [key: string]: string } = {};
   faGamepad = faGamepad;
   faLogOut = faPowerOff;
 
@@ -27,14 +28,15 @@ export class RecomendationComponent implements OnInit {
     });
   }
 
-  async loadGameCovers() {
-    for (const game of this.games) {
-      const coversResponse = await this.gameService.getGameCover(String(game.name)).toPromise();
-      if (coversResponse) {
-        const coversOptions = Object.entries(coversResponse).map(([name, url]) => ({ name, url }));
-        const selectedCover = coversOptions.find(option => option.name === game.name);
-        if (selectedCover) { game.cover = selectedCover.url;}
-      }
-    }
+  loadGameCovers() {
+    this.gameService.getGameCovers().subscribe(covers => {
+      covers.forEach(cover => {
+        if (Object.keys(cover).includes('cover')) {
+          const gameName: string = String(Object.values(cover)[2]);
+          const gameCover: string = String(String(Object.values(Object.values(cover)[1])[1]).replace("thumb", "cover_big"));
+          this.gameCovers[gameName] = gameCover;
+        } 
+      })
+    })
   }
 }

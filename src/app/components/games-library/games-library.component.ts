@@ -27,14 +27,7 @@ export class GamesLibraryComponent {
     });
   }
 
-  async loadGameCovers() {
-    for (const game of this.games) {
-      const coversResponse = await this.gameService.getGameCover(String(game.name)).toPromise();
-      if (coversResponse) {
-        const coversOptions = Object.entries(coversResponse).map(([name, url]) => ({ name, url }));
-        const selectedCover = coversOptions.find(option => option.name === game.name);
-        if (selectedCover) { game.cover = selectedCover.url;}
-      }
-    }
+  loadGameCovers() {
+
   }
 }

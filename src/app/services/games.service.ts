@@ -18,7 +18,7 @@ export class GamesService {
     return this.httpClient.get<Game[]>(`${this.apiUrl}/all`);
   }
   
-  getGameCover(name: string): Observable<string> {
-    return this.httpClient.get<string>(`${this.apiUrl}/covers/${name}`);
+  getGameCovers(): Observable<Object[]> {
+    return this.httpClient.get<Object[]>(`${this.apiUrl}/covers`);
   }
 }

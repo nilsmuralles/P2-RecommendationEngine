@@ -20,7 +20,7 @@
         <h3 class="subtitle">Juegos que podrían gustarte</h3>
         <section class="cards-container">
             <div class="game-card" *ngFor="let game of games">
-                <img [src]="game.cover" alt="" loading="lazy">
+                <img [src]="gameCovers[game.name]" alt="" loading="lazy">
                 <h4>{{ game.name }}</h4>
                 <button class="add-btn">+</button>
             </div>
