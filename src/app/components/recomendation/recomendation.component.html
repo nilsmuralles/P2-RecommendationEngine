@@ -13,14 +13,40 @@
             <fa-icon class="icon" [icon]="faLogOut"></fa-icon>
         </div>
     </header>
-    <form class="search-nav">
-        <input class="search-bar" type="text" placeholder="Busca tus juegos aquí">
-    </form>
+    <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">
+        <form class="search-nav" (ngSubmit)="searchGame(searchForm)" #searchForm="ngForm">
+            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí" [(ngModel)]="nameOfGame" name="game">
+        </form>
+        <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
+            <div *ngIf="searchStatus != 404; else elseGameNotFound">
+                <div class="game-card">
+                    <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
+                        <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                    </div>
+                    <ng-template #elseImageFound>
+                        <img [src]="gameCovers[gameSearched.name]" alt="" loading="lazy">
+                    </ng-template>
+                    <h4>{{ gameSearched.name }}</h4>
+                    <button class="add-btn">+</button>
+                </div>
+            </div>
+            <ng-template #elseGameNotFound>
+                <h2>El juego no se encuentra en la base de datos</h2>
+            </ng-template>
+        </div>
+        <ng-template #elseGameNotSearched></ng-template>
+        
+    </div>
     <div class = "subcontainer">
         <h3 class="subtitle">Juegos que podrían gustarte</h3>
         <section class="cards-container">
             <div class="game-card" *ngFor="let game of games">
-                <img [src]="gameCovers[game.name]" alt="" loading="lazy">
+                <div *ngIf="gameCovers[game.name]==null; else elseCase">
+                    <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                </div>
+                <ng-template #elseCase>
+                    <img [src]="gameCovers[game.name]" alt="" loading="lazy">
+                </ng-template>
                 <h4>{{ game.name }}</h4>
                 <button class="add-btn">+</button>
             </div>

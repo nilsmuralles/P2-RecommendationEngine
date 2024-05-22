@@ -21,5 +21,5 @@ export const routes: Routes = [
 
     //Estas dos rutas siempre tienen que ir hasta abajo
     {path:'', redirectTo: '/login', pathMatch: 'full'},
-    {path:'**', redirectTo: '/login', pathMatch: 'full'}
+    {path:'**', redirectTo: '/page-not-found', pathMatch: 'full'}
 ];

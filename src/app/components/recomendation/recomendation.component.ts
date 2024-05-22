@@ -4,11 +4,12 @@ import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-recomendation',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule],
   templateUrl: './recomendation.component.html',
   styleUrl: './recomendation.component.css'
 })
@@ -18,6 +19,9 @@ export class RecomendationComponent implements OnInit {
   gameCovers: { [key: string]: string } = {};
   faGamepad = faGamepad;
   faLogOut = faPowerOff;
+  nameOfGame: string = '';
+  gameSearched = new Game();
+  searchStatus = 0;
 
   constructor(private gameService: GamesService) { }
 
@@ -38,5 +42,22 @@ export class RecomendationComponent implements OnInit {
         } 
       })
     })
+  }
+  
+  searchGame(searchForm: NgForm){
+    this.clearSearchResult();
+    this.gameService.getGameByName(this.nameOfGame).subscribe((game) =>{
+      this.gameSearched = game
+      console.log(this.gameSearched)
+    }, error =>{
+      this.searchStatus = error.status 
+      console.log(error.status)
+    });
+    searchForm.resetForm();
+  }
+
+  clearSearchResult(){
+    this.gameSearched = new Game();
+    this.searchStatus = 0;
   }
 }
