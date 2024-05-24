@@ -9,8 +9,15 @@
                 <li><a href="#">Recomendaciones</a></li>
             </ul>
         </nav>
-        <div class="logo">
-            <fa-icon class="icon" [icon]="faLogOut"></fa-icon>
+        <div class="nav-options">
+            <div *ngIf="user != null; else elseNameFound">
+                <h2 class="nav-links">{{user}}</h2>
+            </div>
+            <ng-template #elseNameFound>Anonimo</ng-template>
+            
+            <div class="logo">
+                <a routerLink="/login"><fa-icon class="icon" [icon]="faLogOut"></fa-icon></a>
+            </div>
         </div>
     </header>
     <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">

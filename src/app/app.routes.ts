@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path: 'genre-survey', component: GenreSurveyComponent},
     {path: 'platform-survey', component: PlatformSurveyComponent},
     {path: 'category-survey', component: CategorySurveyComponent},
-    {path: 'recomendation', component: RecomendationComponent},
+    {path: 'recomendation/:user', component: RecomendationComponent},
     {path: 'games-library', component: GamesLibraryComponent},
     {path: 'page-not-found', component: PageNotFoundComponent},
 

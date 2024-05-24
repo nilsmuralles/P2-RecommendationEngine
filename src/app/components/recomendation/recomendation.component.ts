@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, NgForm } from '@angular/forms';
+import { User } from '../../models/User.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recomendation',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, FormsModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './recomendation.component.html',
   styleUrl: './recomendation.component.css'
 })
 
 export class RecomendationComponent implements OnInit {
+  @Input('user') user !: string;
   games: Game[] = [];
   gameCovers: { [key: string]: string } = {};
   faGamepad = faGamepad;
@@ -22,6 +25,7 @@ export class RecomendationComponent implements OnInit {
   nameOfGame: string = '';
   gameSearched = new Game();
   searchStatus = 0;
+  
 
   constructor(private gameService: GamesService) { }
 
@@ -48,10 +52,8 @@ export class RecomendationComponent implements OnInit {
     this.clearSearchResult();
     this.gameService.getGameByName(this.nameOfGame).subscribe((game) =>{
       this.gameSearched = game
-      console.log(this.gameSearched)
     }, error =>{
       this.searchStatus = error.status 
-      console.log(error.status)
     });
     searchForm.resetForm();
   }

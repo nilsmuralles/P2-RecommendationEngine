@@ -23,6 +23,8 @@
 }
 
 .logo .icon{
+    text-decoration: none;
+    color: #fff;
     font-size: 30px;
     cursor: pointer;
     transition: all 0.5s;
@@ -31,6 +33,11 @@
 
 .logo .icon:hover{
     transform: scale(1.2);
+}
+
+.logo .icon:visited{
+    text-decoration: none;
+    color: #fff;
 }
 
 
