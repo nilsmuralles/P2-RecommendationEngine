@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '../../models/User.model';
 import { RouterLink } from '@angular/router';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-recomendation',
@@ -27,7 +27,7 @@ export class RecomendationComponent implements OnInit {
   searchStatus = 0;
   
 
-  constructor(private gameService: GamesService) { }
+  constructor(private gameService: GamesService, private userService: UsersService) { }
 
   ngOnInit() {
     this.gameService.getAllGames().subscribe(games => {
@@ -61,5 +61,19 @@ export class RecomendationComponent implements OnInit {
   clearSearchResult(){
     this.gameSearched = new Game();
     this.searchStatus = 0;
+  }
+
+  async addToLibrary(game: Game) {
+    try {
+      const user = await this.userService.getUserByEmail(this.user);
+      if (user) {
+        user.games = user.games || [];
+        user.games.push(game);
+        this.userService.updateUser(user);
+        console.log("Se agregó");
+      }
+    } catch (error) {
+      console.error("Error al agregar el juego a la libreria", error);
+    }
   }
 }

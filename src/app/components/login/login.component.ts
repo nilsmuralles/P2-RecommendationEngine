@@ -21,7 +21,7 @@ export class LoginComponent {
 
   async login(loginForm:NgForm) {
     await this.usersService.login(JSON.stringify(this.userOnLogin).toString()).then(response =>{
-      this.router.navigateByUrl(`/recomendation/${response.name}`)
+      this.router.navigateByUrl(`/recomendation/${response.email}`)
     }).catch(error =>{
       if(error.status == 401){
         alert("Credenciales no válidas, intentelo de nuevo")

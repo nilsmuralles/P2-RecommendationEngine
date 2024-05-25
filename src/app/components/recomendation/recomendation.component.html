@@ -55,7 +55,7 @@
                     <img [src]="gameCovers[game.name]" alt="" loading="lazy">
                 </ng-template>
                 <h4>{{ game.name }}</h4>
-                <button class="add-btn">+</button>
+                <button class="add-btn" (click)="addToLibrary(game)">+</button>
             </div>
         </section>
     </div>

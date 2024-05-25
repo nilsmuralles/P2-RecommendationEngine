@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { User } from '../models/User.model';
 import { GenresService } from './genres.service';
-import { Genre } from '../models/Genre.model';
 import { PlatformsService } from './platforms.service';
 import { CategoriesService } from './categories.service';
 
@@ -102,5 +101,16 @@ export class UsersService {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
     return firstValueFrom(this.httpClient.post<any>(`${this.url}/login`, user, httpOptions));
+  }
+
+  getUserByEmail(email: string): Promise<User> {
+    return firstValueFrom(this.httpClient.get<User>(`${this.url}/${email}`));
+  }  
+
+  async updateUser(user: User): Promise<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return firstValueFrom(this.httpClient.put<User>(`${this.url}/${user.email}`, user, httpOptions));
   }
 }
