@@ -21,12 +21,12 @@
         </div>
     </header>
     <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">
-        <form class="search-nav">
-            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí">
+        <form class="search-nav" (ngSubmit)="searchGame(searchForm)" #searchForm="ngForm">
+            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí" [(ngModel)]="nameOfGame" name="nameOfGame">
         </form>
         <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
             <div *ngIf="searchStatus != 404; else elseGameNotFound">
-                <div class="game-card">
+                <div class="game-card" (click)="showGameInfo()">
                     <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
                         <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
                     </div>
@@ -34,7 +34,29 @@
                         <img [src]="gameCovers[gameSearched.name]" alt="" loading="lazy">
                     </ng-template>
                     <h4>{{ gameSearched.name }}</h4>
-                    <button class="add-btn">+</button>
+                    <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
+                    <dialog class="game-info">
+                        <button class="exit-game-info" (click)="exitGameInfo()">x</button>
+                        <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
+                            <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                        </div>
+                        <div class="info">
+                            <header>
+                                <h1>{{ gameSearched.name }}</h1>
+                                <h2>({{ gameSearched.released }})</h2>
+                            </header>
+                            <section>
+                                <h3 class="developers"><fa-icon [icon]="faDevelopers"></fa-icon><span>Developers</span>{{ gameSearched.developers }}</h3>
+                                <h3 class="genre"><fa-icon [icon]="faGenre"></fa-icon><span>Genre</span>{{ getGenre(gameSearched) }}</h3>
+                                <h3 class="platform"><fa-icon [icon]="faPlatforms"></fa-icon><span>Platform</span>{{ getPlatform(gameSearched) }}</h3>
+                                <h3 class="category"><fa-icon [icon]="faCategory"></fa-icon><span>Category</span>{{ getCategory(gameSearched) }}</h3>
+                            </section>
+                            <footer>
+                                <h5>{{ gameSearched.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
+                                <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
+                            </footer>
+                        </div>
+                    </dialog>
                 </div>
             </div>
             <ng-template #elseGameNotFound>
@@ -67,7 +89,7 @@
                         </section>
                         <footer>
                             <h5>{{ game.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
-                            <button class="add-btn">+</button>
+                            <button class="add-btn" (click)="addToLibrary(game)">+</button>
                         </footer>
                     </div>
                 </div>
@@ -89,7 +111,7 @@
                     <img [src]="gameCovers[game.name]" alt="" loading="lazy">
                 </ng-template>
                 <h4>{{ game.name }}</h4>
-                <button class="add-btn">+</button>
+                <button class="add-btn" (click)="addToLibrary(game)">+</button>
                 <dialog class="game-info">
                     <button class="exit-game-info" (click)="exitGameInfo()">x</button>
                     <div *ngIf="gameCovers[game.name]==null; else elseCase">
@@ -108,7 +130,7 @@
                         </section>
                         <footer>
                             <h5>{{ game.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
-                            <button class="add-btn">+</button>
+                            <button class="add-btn" (click)="addToLibrary(game)">+</button>
                         </footer>
                     </div>
                 </dialog>

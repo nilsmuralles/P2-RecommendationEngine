@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/User.model';
-import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -41,9 +40,9 @@ export class GamesLibraryComponent implements OnInit {
   currentFirstCover: number = 0;
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
-  userEmail: string | null = null;
+  @Input('user') userEmail!: string;
 
-  constructor(private gameService: GamesService, private userService: UsersService, private authService: AuthService) {}
+  constructor(private gameService: GamesService, private userService: UsersService) {}
 
   // ngOnInit() {
   //   this.userEmail = this.authService.getCurrentUserEmail();
@@ -58,9 +57,9 @@ export class GamesLibraryComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userEmail = this.authService.getCurrentUserEmail();
+    this.currentUser.email= this.userEmail;
     if (this.userEmail) {
-      this.userService.getUsersRecommendations(this.userService.getCurrentUser(), 6).subscribe(recommendations =>{
+      this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
         this.games = recommendations;
         this.setOfRecomendedGames = recommendations.length;
         this.loadRecommendedGamesCovers();

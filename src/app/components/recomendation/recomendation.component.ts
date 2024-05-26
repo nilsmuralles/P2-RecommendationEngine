@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/User.model';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recomendation',
@@ -41,14 +40,14 @@ export class RecomendationComponent implements OnInit {
   currentFirstCover: number = 0;
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
-  userEmail: string | null = null;
+  @Input('user') userEmail!: string;
 
-  constructor(private gameService: GamesService, private userService: UsersService, private authService: AuthService) {}
+  constructor(private gameService: GamesService, private userService: UsersService) {}
 
   ngOnInit() {
-    this.userEmail = this.authService.getCurrentUserEmail();
+    this.currentUser.email= this.userEmail;
     if (this.userEmail) {
-      this.userService.getUsersRecommendations(this.userService.getCurrentUser(), 6).subscribe(recommendations =>{
+      this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
         this.recommendedGames = recommendations;
         this.setOfRecomendedGames = recommendations.length;
         this.loadRecommendedGamesCovers();
@@ -93,13 +92,13 @@ export class RecomendationComponent implements OnInit {
   }
   
   searchGame(searchForm: NgForm){
-    this.clearSearchResult();
     this.gameService.getGameByName(this.nameOfGame).subscribe((game) =>{
       this.gameSearched = game
     }, error =>{
       this.searchStatus = error.status
     });
     searchForm.resetForm();
+    this.clearSearchResult();
   }
 
   clearSearchResult(){
@@ -167,5 +166,16 @@ export class RecomendationComponent implements OnInit {
     if (p as number > 23) { 
       this.loadGameCovers((this.currentLastCover + 3), 1771);
     }
+  }
+
+  async addToLibrary(game: Game){
+    await this.userService.getUserByEmail(this.userEmail).then(user=>{
+      if(!user.games?.includes(game)){
+        user.games?.push(game);
+        this.userService.updateUser(user);
+      }
+    }).catch(error =>{
+      console.log(error)
+    })
   }
 }
