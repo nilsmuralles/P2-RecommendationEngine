@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Game } from '../models/Game.model';
 
 @Injectable({
@@ -9,9 +9,11 @@ import { Game } from '../models/Game.model';
 
 export class GamesService {
   private apiUrl: string;
+  private recommendationEndpoint: string;
 
   constructor(private httpClient: HttpClient) { 
-    this.apiUrl = 'http://localhost:8080/api/v1/games';
+    this.apiUrl = 'https://recommendation-api-0f71bf51e30a.herokuapp.com/api/v1/games';
+    this.recommendationEndpoint = this.apiUrl.replace('games', 'recommendations');
   }
 
   getAllGames(): Observable<Game[]> {
@@ -24,5 +26,12 @@ export class GamesService {
 
   getGameByName(name:any){
     return this.httpClient.get<Game>(`${this.apiUrl}/${name}`);
+  }
+
+  getRecommendedGamesCovers(recommendedGames:Game[]): Observable<Object[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    return this.httpClient.post<any>(`${this.recommendationEndpoint}/covers`, recommendedGames, httpOptions)
   }
 }

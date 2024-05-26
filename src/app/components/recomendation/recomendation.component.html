@@ -47,7 +47,7 @@
         <h3 class="subtitle">¡Tenemos recomendaciones para ti!</h3>
         <section class="recommendation-container">
             <div class="track">
-                <div class="game-info" *ngFor="let game of recomendedGames">
+                <div class="game-info" *ngFor="let game of recommendedGames">
                     <div *ngIf="gameCovers[game.name]==null; else elseCase">
                         <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
                     </div>

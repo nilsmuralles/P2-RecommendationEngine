@@ -6,8 +6,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad, faKeyboard, faLaptopCode, faPowerOff, faRobot, faShapes, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { User } from '../../models/User.model';
 import { RouterLink } from '@angular/router';
+import { UsersService } from '../../services/users.service';
+import { User } from '../../models/User.model';
 
 @Component({
   selector: 'app-recomendation',
@@ -19,8 +20,9 @@ import { RouterLink } from '@angular/router';
 
 export class RecomendationComponent implements OnInit {
   @Input('user') user !: string;
+  currentUser: User = new User();
   games: Game[] = [];
-  recomendedGames: Game[] = [];
+  recommendedGames: Game[] = [];
   gameCovers: { [key: string]: string } = {};
   faGamepad = faGamepad;
   faLogOut = faPowerOff;
@@ -40,16 +42,23 @@ export class RecomendationComponent implements OnInit {
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
 
-  constructor(private gameService: GamesService) { }
+  constructor(private gameService: GamesService, private userService: UsersService) { }
 
   ngOnInit() {
+    this.currentUser = this.userService.getCurrentUser();
+
     this.gameService.getAllGames().subscribe(games => {
       this.games = games;
       this.loadGameCovers(this.currentFirstCover, this.currentLastCover);
-      this.recomendedGames =  this.getRecomendedGames();
-      this.setOfRecomendedGames = this.getRecomendedGames().length;
       this.totalGames = this.games.length;
     });
+
+    this.userService.getUsersRecommendations(this.userService.getCurrentUser(), 6).subscribe(recommendations =>{
+      this.recommendedGames = recommendations;
+      this.setOfRecomendedGames = recommendations.length;
+      this.loadRecommendedGamesCovers();
+    })
+
     const nextBtn = document.querySelector(".next-game");
     nextBtn?.addEventListener("click", this.handleNextSlide.bind(this));
 
@@ -59,6 +68,18 @@ export class RecomendationComponent implements OnInit {
 
   loadGameCovers(start:number, end:number) {
     this.gameService.getGameCovers(start, end).subscribe(covers => {
+      covers.forEach(cover => {
+        const gameName: string = String(Object.values(cover)[2]);
+        if (Object.keys(cover).includes('cover')) {
+          const gameCover: string = String(Object.values(Object.values(cover)[1])[1]).replace("thumb", "cover_big");
+          this.gameCovers[gameName] = gameCover;
+        } 
+      })
+    })
+  }
+
+  loadRecommendedGamesCovers(){
+    this.gameService.getRecommendedGamesCovers(this.recommendedGames).subscribe(covers => {
       covers.forEach(cover => {
         const gameName: string = String(Object.values(cover)[2]);
         if (Object.keys(cover).includes('cover')) {
@@ -116,17 +137,12 @@ export class RecomendationComponent implements OnInit {
     return String(Object.values(Object.values(Object.values(game)[6][0]))[1])
   }
 
-  getRecomendedGames(): Game[]{
-    return this.games.slice(0,6);
-  }
-
   handleNextSlide(e: Event) {
     const target = e.target as HTMLElement;
     if (target.classList.contains("next-game") && target.parentElement?.parentElement) {
       const track = target.parentElement.parentElement.querySelector('.track') as HTMLElement;
       this.currentGame = (this.currentGame + 1) % this.setOfRecomendedGames;
       track.style.transform = `translateX(${-this.currentGame * 100}%)`;
-      console.log(this.currentGame);
     }
   }
   
@@ -136,7 +152,6 @@ export class RecomendationComponent implements OnInit {
       const track = target.parentElement.parentElement.querySelector('.track') as HTMLElement;
       this.currentGame = (this.currentGame - 1 + this.setOfRecomendedGames) % this.setOfRecomendedGames;
       track.style.transform = `translateX(${-this.currentGame * 100}%)`;
-      console.log(this.currentGame);
     }
   }
 

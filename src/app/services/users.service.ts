@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { User } from '../models/User.model';
 import { GenresService } from './genres.service';
 import { PlatformsService } from './platforms.service';
 import { CategoriesService } from './categories.service';
+import { Game } from '../models/Game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,14 @@ export class UsersService {
   private likedGenres: string[];
   private likedPlatforms: string[];
   private likedCategories: string[];
+  private recommendationEndpoint: string;
 
   constructor() {
-    this.url = 'http://localhost:8080/api/v1/users';
+    this.url = 'https://recommendation-api-0f71bf51e30a.herokuapp.com/api/v1/users';
     this.likedGenres = [];
     this.likedPlatforms = [];
     this.likedCategories = [];
+    this.recommendationEndpoint = this.url.replace('users', 'recommendations');
   }
 
   setLikedGenres(genres: string[]): void {
@@ -57,6 +60,14 @@ export class UsersService {
     this.newUser = user;   
   }
 
+  setCurrentUser(user: User){
+    this.newUser = user;
+  }
+
+  getCurrentUser(){
+    return this.newUser;
+  }
+
   async setUsersPreferences(){
     this.newUser.likedGames = [];
     this.newUser.games = [];
@@ -85,8 +96,7 @@ export class UsersService {
       this.newUser.likedCategories?.push(this.categoryService.searchCategory(category))
     })
 
-    const response = await this.saveUser(JSON.stringify(this.newUser).toString());
-    console.log(response);
+    await this.saveUser(JSON.stringify(this.newUser).toString());
   }
 
   saveUser(user: any){
@@ -112,5 +122,9 @@ export class UsersService {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
     return firstValueFrom(this.httpClient.put<User>(`${this.url}/${user.email}`, user, httpOptions));
+  }
+
+  getUsersRecommendations(user:User, amount:number): Observable<Game[]> {
+    return this.httpClient.get<Game[]>(`${this.recommendationEndpoint}/${user.email}?number=${amount}`);
   }
 }

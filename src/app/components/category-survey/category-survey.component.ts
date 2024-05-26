@@ -36,6 +36,6 @@ export class CategorySurveyComponent {
 
   addUsersPreferences(){
     this.usersService.setUsersPreferences();
-    this.router.navigateByUrl('/recomendation');
+    this.router.navigateByUrl(`/recomendation/${this.usersService.getCurrentUser().email}`);
   }
 }
