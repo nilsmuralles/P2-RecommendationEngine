@@ -28,16 +28,16 @@
     font-size: 30px;
     cursor: pointer;
     transition: all 0.5s;
-
-}
-
-.logo .icon:hover{
     transform: scale(1.2);
 }
 
 .logo .icon:visited{
     text-decoration: none;
     color: #fff;
+}
+
+.logo .icon:hover{
+    transform: scale(1.2);
 }
 
 
@@ -120,7 +120,6 @@
     justify-content: center;
     flex-direction: column;
     width: 75%;
-    margin-bottom: 10%;
 }
 
 .game-card{
@@ -156,7 +155,7 @@
     z-index: -1;
 }
 
-.game-card button{
+.add-btn{
     bottom: 0;
     right: 0;
     margin-right: 5%;
@@ -174,7 +173,7 @@
     cursor: pointer;
 }
 
-.game-card button:hover{
+.add-btn:hover{
     color: var(--form-bg-color);
     background-color: #6363ce;
 }
@@ -184,7 +183,7 @@
 }
 
 .game-card:hover h4,
-.game-card:hover button{
+.game-card:hover .add-btn{
     bottom: 10px;
     z-index: 2;
 }
@@ -201,4 +200,227 @@
     box-shadow: inset 0px -52px 83px -3px rgba(0,0,0,0.9);
     overflow: hidden;
     z-index: 1;
+}
+
+.recommendation-container{
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    width: 665px;
+    height: 400px;
+}
+
+.track{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 500ms ease-in-out;
+}
+
+.recommendation-container .game-info{
+    display: flex;
+    top: initial;
+    left: initial;
+    transform: none;
+    color: black;
+    padding: 2rem;
+    gap: 2rem;
+    margin: 0 auto;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: none;
+}
+
+.controllers{
+    margin: 2rem auto;
+    display: flex;
+    gap: 2rem;
+}
+
+.next-game,
+.prev-game{
+    height: 2.5rem;
+    width: 2.5rem;  
+    border-radius: 50%;
+    border: 0;
+    background-color: var(--form-bg-color);
+    font-weight: bold;
+    color: rgb(69, 141, 236);
+    cursor: pointer;
+}
+
+.controllers button:hover{
+    background-color: rgb(69, 141, 236);
+    color: var(--form-bg-color);
+}
+
+.recommendation-container .game-info .add-btn{
+    z-index: 3;
+}
+
+.game-info{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    padding: 2.5rem;
+    gap: 2.5rem;
+    position: fixed;
+    min-height: 250px;
+    min-width: 450px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(227, 227, 227);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0);
+    border: 0;
+    outline: 0;
+}
+
+.game-info[open]{
+    display: flex;
+    z-index: 3;
+}
+
+.game-info::backdrop{
+    background: #232526;  
+    background: -webkit-linear-gradient(to right, #414345, #232526);  
+    background: linear-gradient(to right, #414345, #232526); 
+    opacity: 0.2;
+}
+
+.game-info img{
+    width: 260px;
+    height: 350px;
+}
+
+.info{
+    min-width: 50ch;
+    max-width: 50ch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.info h5{
+    font-size: 2rem;
+    font-weight: lighter;
+}
+
+.exit-game-info{
+    top: 0;
+    right: 0;
+    position: absolute;
+    height: 2.5rem;
+    right: 0;
+    width: 2.5rem;
+    font-size: 1.5rem;
+    color: rgb(245, 82, 82);
+    border: 0;
+    background-color: var(--form-bg-color);
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.exit-game-info:hover{
+    color: var(--form-bg-color);
+    background-color: rgb(245, 82, 82);
+}
+
+.game-info .add-btn{
+    position: initial;
+}
+
+.info header h1{
+    font-size: 1.5rem;
+}
+
+.info section{
+    flex-grow: 1;
+    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+}
+
+.info footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.developers,
+.genre,
+.platform,
+.category{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.developers:hover,
+.genre:hover,
+.platform:hover,
+.category:hover{
+    transform: scale(1.2);
+}
+
+.info section h3 fa-icon{
+    font-size: 1.5rem;
+}
+
+.pagination-controller{
+    margin: 3% auto;
+}
+
+.pagination-controller ::ng-deep .ngx-pagination {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.pagination-controller ::ng-deep .ngx-pagination li{
+    background-color: var(--form-bg-color);
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-controller ::ng-deep .ngx-pagination .small-screen{
+    display: none;
+}
+
+.pagination-controller ::ng-deep .ngx-pagination .current{
+    background: rgb(69, 141, 236);
+    color: var(--gray-bg-color)
+}
+
+.pagination-controller ::ng-deep .pagination-next a,
+.pagination-controller ::ng-deep .pagination-previous a,
+.pagination-controller ::ng-deep .pagination-previous.disabled::before,
+.pagination-controller ::ng-deep .pagination-next.disabled::before{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    margin-top: -5px;
+    color: var(--gray-bg-color);
+}
+
+.pagination-controller ::ng-deep a:hover{
+    background-color: transparent;
+}
+
+.pagination-controller ::ng-deep .pagination-next a::after,
+.pagination-controller ::ng-deep .pagination-next a::before,
+.pagination-controller ::ng-deep .pagination-previous a::after,
+.pagination-controller ::ng-deep .pagination-previous a::before{
+    margin: 0;
+    padding: 0;
 }
