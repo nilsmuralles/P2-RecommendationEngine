@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/User.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recomendation',
@@ -18,8 +19,7 @@ import { User } from '../../models/User.model';
   styleUrl: './recomendation.component.css'
 })
 
-export class RecomendationComponent implements OnInit {
-  @Input('user') user !: string;
+export class RecomendationComponent implements OnInit {  
   currentUser: User = new User();
   games: Game[] = [];
   recommendedGames: Game[] = [];
@@ -41,29 +41,31 @@ export class RecomendationComponent implements OnInit {
   currentFirstCover: number = 0;
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
+  userEmail: string | null = null;
 
-  constructor(private gameService: GamesService, private userService: UsersService) { }
+  constructor(private gameService: GamesService, private userService: UsersService, private authService: AuthService) {}
 
   ngOnInit() {
-    this.currentUser = this.userService.getCurrentUser();
+    this.userEmail = this.authService.getCurrentUserEmail();
+    if (this.userEmail) {
+      this.userService.getUsersRecommendations(this.userService.getCurrentUser(), 6).subscribe(recommendations =>{
+        this.recommendedGames = recommendations;
+        this.setOfRecomendedGames = recommendations.length;
+        this.loadRecommendedGamesCovers();
+      });
 
-    this.gameService.getAllGames().subscribe(games => {
-      this.games = games;
-      this.loadGameCovers(this.currentFirstCover, this.currentLastCover);
-      this.totalGames = this.games.length;
-    });
+      this.gameService.getAllGames().subscribe(games => {
+        this.games = games
+        this.loadGameCovers(this.currentFirstCover, this.currentLastCover)
+        this.totalGames = this.games.length
+      })
 
-    this.userService.getUsersRecommendations(this.userService.getCurrentUser(), 6).subscribe(recommendations =>{
-      this.recommendedGames = recommendations;
-      this.setOfRecomendedGames = recommendations.length;
-      this.loadRecommendedGamesCovers();
-    })
+      const nextBtn = document.querySelector(".next-game");
+      nextBtn?.addEventListener("click", this.handleNextSlide.bind(this))
 
-    const nextBtn = document.querySelector(".next-game");
-    nextBtn?.addEventListener("click", this.handleNextSlide.bind(this));
-
-    const prevBtn = document.querySelector(".prev-game");
-    prevBtn?.addEventListener("click", this.handlePrevSlide.bind(this));
+      const prevBtn = document.querySelector(".prev-game");
+      prevBtn?.addEventListener("click", this.handlePrevSlide.bind(this))
+    }
   }
 
   loadGameCovers(start:number, end:number) {

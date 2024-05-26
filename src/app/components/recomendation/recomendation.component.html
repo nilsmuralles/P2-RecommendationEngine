@@ -5,14 +5,14 @@
                 <fa-icon  class="icon" [icon]="faGamepad"></fa-icon>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Mi Biblioteca</a></li>
-                <li><a href="#">Recomendaciones</a></li>
+                <li *ngIf="userEmail"><a [routerLink]="['/games-library', userEmail]">Mi Biblioteca</a></li>
+                <li *ngIf="userEmail"><a [routerLink]="['/recomendation', userEmail]">Recomendaciones</a></li>
             </ul>
         </nav>
         <div class="nav-options">
-            <div *ngIf="user != null; else elseNameFound">
-                <h2 class="nav-links">{{user}}</h2>
-            </div>
+            <div *ngIf="userEmail; else elseNameFound">
+                <h2 class="nav-links">{{userEmail}}</h2>
+              </div>
             <ng-template #elseNameFound>Anonimo</ng-template>
             
             <div class="logo">
@@ -21,8 +21,8 @@
         </div>
     </header>
     <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">
-        <form class="search-nav" (ngSubmit)="searchGame(searchForm)" #searchForm="ngForm">
-            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí" [(ngModel)]="nameOfGame" name="game">
+        <form class="search-nav">
+            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí">
         </form>
         <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
             <div *ngIf="searchStatus != 404; else elseGameNotFound">

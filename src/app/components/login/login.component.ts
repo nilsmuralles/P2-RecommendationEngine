@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/User.model';
 import { UsersService } from '../../services/users.service';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'login-component',
@@ -15,12 +16,14 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginComponent {
   userOnLogin = new User();
   usersService = inject(UsersService);
+  authService = inject(AuthService);
   status = 200;
 
   constructor(private router: Router){}
 
   async login(loginForm:NgForm) {
     await this.usersService.login(JSON.stringify(this.userOnLogin).toString()).then(response =>{
+      this.authService.setCurrentUserEmail(response.email);
       this.router.navigateByUrl(`/recomendation/${response.email}`)
       this.usersService.setCurrentUser(response);
     }).catch(error =>{

@@ -5,25 +5,85 @@
                 <fa-icon  class="icon" [icon]="faGamepad"></fa-icon>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Mi Biblioteca</a></li>
-                <li><a href="#">Recomendaciones</a></li>
+                <li *ngIf="userEmail"><a [routerLink]="['/games-library', userEmail]">Mi Biblioteca</a></li>
+                <li *ngIf="userEmail"><a [routerLink]="['/recomendation', userEmail]">Recomendaciones</a></li>
             </ul>
         </nav>
-        <div class="logo">
-            <fa-icon class="icon" [icon]="faLogOut"></fa-icon>
+        <div class="nav-options">
+            <div *ngIf="userEmail; else elseNameFound">
+                <h2 class="nav-links">{{userEmail}}</h2>
+              </div>
+            <ng-template #elseNameFound>Anonimo</ng-template>
+            
+            <div class="logo">
+                <a routerLink="/login"><fa-icon class="icon" [icon]="faLogOut"></fa-icon></a>
+            </div>
         </div>
     </header>
-    <form class="search-nav">
-        <input class="search-bar" type="text" placeholder="Busca tus juegos aquí">
-    </form>
+
+    <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">
+        <form class="search-nav">
+            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí">
+        </form>
+        <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
+            <div *ngIf="searchStatus != 404; else elseGameNotFound">
+                <div class="game-card">
+                    <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
+                        <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                    </div>
+                    <ng-template #elseImageFound>
+                        <img [src]="gameCovers[gameSearched.name]" alt="" loading="lazy">
+                    </ng-template>
+                    <h4>{{ gameSearched.name }}</h4>
+                    <button class="add-btn">&hearts;</button>
+                </div>
+            </div>
+            <ng-template #elseGameNotFound>
+                <h2>El juego no se encuentra en la base de datos</h2>
+            </ng-template>
+        </div>
+        <ng-template #elseGameNotSearched></ng-template>
+    </div>
+
     <div class = "subcontainer">
         <h3 class="subtitle">Tus juegos</h3>
         <section class="cards-container">
-            <div class="game-card" *ngFor="let game of games">
-                <img [src] = "" alt="">
+            <div class="game-card" *ngFor="let game of games | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"(click)="showGameInfo()" >
+                <div *ngIf="gameCovers[game.name]==null; else elseCase">
+                    <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                </div>
+                <ng-template #elseCase>
+                    <img [src]="gameCovers[game.name]" alt="" loading="lazy">
+                </ng-template>
                 <h4>{{ game.name }}</h4>
                 <button class="add-btn">&hearts;</button>
+                <dialog class="game-info">
+                    <button class="exit-game-info" (click)="exitGameInfo()">x</button>
+                    <div *ngIf="gameCovers[game.name]==null; else elseCase">
+                        <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                    </div>
+                    <div class="info">
+                        <header>
+                            <h1>{{ game.name }}</h1>
+                            <h2>({{ game.released }})</h2>
+                        </header>
+                        <section>
+                            <h3 class="developers"><fa-icon [icon]="faDevelopers"></fa-icon><span>Developers</span>{{ game.developers }}</h3>
+                            <h3 class="genre"><fa-icon [icon]="faGenre"></fa-icon><span>Genre</span>{{ getGenre(game) }}</h3>
+                            <h3 class="platform"><fa-icon [icon]="faPlatforms"></fa-icon><span>Platform</span>{{ getPlatform(game) }}</h3>
+                            <h3 class="category"><fa-icon [icon]="faCategory"></fa-icon><span>Category</span>{{ getCategory(game) }}</h3>
+                        </section>
+                        <footer>
+                            <h5>{{ game.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
+                            <button class="add-btn">&hearts;</button>
+                        </footer>
+                    </div>
+                </dialog>
             </div>
         </section>
     </div>
+
+    <footer class="pagination-controller">
+        <pagination-controls previousLabel="" nextLabel="" (pageChange)="p = $event; checkForNextCovers(p)"></pagination-controls>
+    </footer>
 </div>

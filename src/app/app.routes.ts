@@ -16,7 +16,7 @@ export const routes: Routes = [
     {path: 'platform-survey', component: PlatformSurveyComponent},
     {path: 'category-survey', component: CategorySurveyComponent},
     {path: 'recomendation/:user', component: RecomendationComponent},
-    {path: 'games-library', component: GamesLibraryComponent},
+    {path: 'games-library/:user', component: GamesLibraryComponent},
     {path: 'page-not-found', component: PageNotFoundComponent},
 
     //Estas dos rutas siempre tienen que ir hasta abajo
