@@ -56,7 +56,7 @@
                     <img [src]="gameCovers[game.name]" alt="" loading="lazy">
                 </ng-template>
                 <h4>{{ game.name }}</h4>
-                <button class="add-btn">&hearts;</button>
+                <button class="add-btn" (click)="likeGame(game)">&hearts;</button>
                 <dialog class="game-info">
                     <button class="exit-game-info" (click)="exitGameInfo()">x</button>
                     <div *ngIf="gameCovers[game.name]==null; else elseCase">
@@ -75,7 +75,7 @@
                         </section>
                         <footer>
                             <h5>{{ game.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
-                            <button class="add-btn">&hearts;</button>
+                            <button class="add-btn" (click)="likeGame(game)">&hearts;</button>
                         </footer>
                     </div>
                 </dialog>
@@ -86,4 +86,6 @@
     <footer class="pagination-controller">
         <pagination-controls previousLabel="" nextLabel="" (pageChange)="p = $event; checkForNextCovers(p)"></pagination-controls>
     </footer>
+    <div *ngIf="fireGameAlert" class="added-game-alert">{{alertMessage}} <fa-icon [icon]="faCheck"></fa-icon></div>
+    <div *ngIf="fireAlreadyAddedAlert" class="has-game-alert">{{alertMessage}} <fa-icon [icon]="faExclamation"></fa-icon></div>
 </div>

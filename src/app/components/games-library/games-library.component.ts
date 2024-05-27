@@ -1,15 +1,14 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGamepad, faPowerOff, faHeart, faRobot, faShapes, faStarHalfStroke, faLaptopCode, faKeyboard} from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faPowerOff, faHeart, faRobot, faShapes, faStarHalfStroke, faLaptopCode, faKeyboard, faExclamation, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/User.model';
-
 
 @Component({
   selector: 'app-games-library',
@@ -30,6 +29,8 @@ export class GamesLibraryComponent implements OnInit {
   faCategory = faShapes;
   faDevelopers = faLaptopCode;
   faPlatforms = faKeyboard;
+  faCheck = faCheck;
+  faExclamation = faExclamation;
   nameOfGame: string = '';
   gameSearched = new Game();
   searchStatus = 0;
@@ -41,40 +42,28 @@ export class GamesLibraryComponent implements OnInit {
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
   @Input('user') userEmail!: string;
+  fireGameAlert: boolean = false;
+  fireAlreadyAddedAlert: boolean = false;
+  alertMessage: string = "";
 
   constructor(private gameService: GamesService, private userService: UsersService) {}
 
-  // ngOnInit() {
-  //   this.userEmail = this.authService.getCurrentUserEmail();
-  //   if (this.userEmail) {
-  //     this.gameService.getAllGames().subscribe(games => {
-  //       this.games = games;
-  //       this.loadGameCovers();
-  //     });
-  //   }
-    
-  // }
-
-
   ngOnInit() {
-    this.currentUser.email= this.userEmail;
     if (this.userEmail) {
-      this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
-        this.games = recommendations;
-        this.setOfRecomendedGames = recommendations.length;
-        this.loadRecommendedGamesCovers();
-      });
-
-      this.gameService.getAllGames().subscribe(games => {
-        this.games = games
+      this.userService.getUserByEmail(this.userEmail).then(user =>{
+        this.currentUser = user
+        this.games = user.games || []
+        this.setOfRecomendedGames = this.games.length
         this.loadGameCovers(this.currentFirstCover, this.currentLastCover)
         this.totalGames = this.games.length
-      })
+      }).catch(error =>{
+        console.error('Error fetching user:', error)
+      });
 
-      const nextBtn = document.querySelector(".next-game");
+      const nextBtn = document.querySelector(".next-game")
       nextBtn?.addEventListener("click", this.handleNextSlide.bind(this))
 
-      const prevBtn = document.querySelector(".prev-game");
+      const prevBtn = document.querySelector(".prev-game")
       prevBtn?.addEventListener("click", this.handlePrevSlide.bind(this))
     }
   }
@@ -91,21 +80,9 @@ export class GamesLibraryComponent implements OnInit {
     })
   }
 
-  loadRecommendedGamesCovers(){
-    this.gameService.getRecommendedGamesCovers(this.games).subscribe(covers => {
-      covers.forEach(cover => {
-        const gameName: string = String(Object.values(cover)[2]);
-        if (Object.keys(cover).includes('cover')) {
-          const gameCover: string = String(Object.values(Object.values(cover)[1])[1]).replace("thumb", "cover_big");
-          this.gameCovers[gameName] = gameCover;
-        } 
-      })
-    })
-  }
-
   searchGame(searchForm: NgForm){
     this.clearSearchResult();
-    this.gameService.getGameByName(this.nameOfGame).subscribe((game) =>{
+    this.gameService.getGameByName(this.nameOfGame).subscribe(game=>{
       this.gameSearched = game
     }, error =>{
       this.searchStatus = error.status
@@ -125,7 +102,7 @@ export class GamesLibraryComponent implements OnInit {
         const dialog = target.querySelector('dialog');
         dialog?.showModal();
       }
-    })
+    });
   }
 
   exitGameInfo(){
@@ -142,7 +119,7 @@ export class GamesLibraryComponent implements OnInit {
     return String(Object.values(Object.values(Object.values(game)[4]))[1])
   }
 
-  getPlatform(game:Game){    
+  getPlatform(game:Game){
     return String(Object.values(Object.values(Object.values(game)[5][0]))[1])
   }
 
@@ -158,7 +135,7 @@ export class GamesLibraryComponent implements OnInit {
       track.style.transform = `translateX(${-this.currentGame * 100}%)`;
     }
   }
-  
+
   handlePrevSlide(e: Event) {
     const target = e.target as HTMLElement;
     if (target.classList.contains("prev-game") && target.parentElement?.parentElement) {
@@ -168,16 +145,39 @@ export class GamesLibraryComponent implements OnInit {
     }
   }
 
-  checkForNextCovers(p: any){
-    if (p as number > 7) { 
+  checkForNextCovers(p: any) {
+    if (p as number > 7) {
       this.loadGameCovers((this.currentLastCover + 1), (this.currentLastCover + (1 * 480)));
     }
-    if (p as number > 15) { 
+    if (p as number > 15) {
       this.loadGameCovers((this.currentLastCover + 2), (this.currentLastCover + (2 * 480)));
     }
-    if (p as number > 23) { 
+    if (p as number > 23) {
       this.loadGameCovers((this.currentLastCover + 3), 1771);
     }
   }
-  
+
+  async likeGame(game: Game) {
+    await this.userService.getUserByEmail(this.userEmail).then(user => {
+      const existingGame = user.likedGames?.find(existingGame => existingGame.name === game.name);
+      if (!existingGame) {
+        user.likedGames?.push(game);
+        this.alertMessage = `${game.name} le ha gustado`;
+
+      } else {
+        user.likedGames = user.likedGames?.filter(existingGame => existingGame.name !== game.name);
+        this.alertMessage = `${game.name} ya no le gusta`;
+      }
+
+      this.userService.updateUser(user);
+      this.fireGameAlert = true;
+
+      setTimeout(() => {
+        this.fireGameAlert = false;
+      }, 2000);
+
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 }

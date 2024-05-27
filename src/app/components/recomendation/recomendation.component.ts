@@ -179,26 +179,28 @@ export class RecomendationComponent implements OnInit {
     }
   }
 
-  async addToLibrary(game: Game){
-    await this.userService.getUserByEmail(this.userEmail).then(user=>{
-      if(!user.games?.includes(game)){
+  async addToLibrary(game: Game) {
+    await this.userService.getUserByEmail(this.userEmail).then(user => {
+      if (!user.games?.find(existingGame => existingGame.name === game.name)) {
         user.games?.push(game);
         this.userService.updateUser(user);
-        this.alertMessage = `${game.name} añadido a la librería`
+        this.alertMessage = `${game.name} añadido a la librería`;
         this.fireGameAlert = true;
         setTimeout(() => {
-            this.fireGameAlert = false;
+          this.fireGameAlert = false;
         }, 2000);
-      } 
-      if (user.games?.includes(game)) {
-        this.alertMessage = `Ya tienes ${game.name} en tu librería`
+
+      } else {
+        this.alertMessage = `Ya tienes ${game.name} en tu librería`;
         this.fireAlreadyAddedAlert = true;
         setTimeout(() => {
-            this.fireAlreadyAddedAlert = false;
+          this.fireAlreadyAddedAlert = false;
         }, 2000);
       }
-    }).catch(error =>{
-      console.log(error)
-    })
+      
+    }).catch(error => {
+      console.log(error);
+    });
   }
+  
 }

@@ -141,6 +141,6 @@
     <footer class="pagination-controller">
         <pagination-controls previousLabel="" nextLabel="" (pageChange)="p = $event; checkForNextCovers(p)"></pagination-controls>
     </footer>
-    <div *ngIf="fireGameAlert" class="added-game-alert"><fa-icon [icon]="faCheck"></fa-icon> {{alertMessage}}</div>
-    <div *ngIf="fireAlreadyAddedAlert" class="has-game-alert"><fa-icon [icon]="faExclamation"></fa-icon> {{alertMessage}}</div>
+    <div *ngIf="fireGameAlert" class="added-game-alert">{{alertMessage}} <fa-icon [icon]="faCheck"></fa-icon></div>
+    <div *ngIf="fireAlreadyAddedAlert" class="has-game-alert">{{alertMessage}} <fa-icon [icon]="faExclamation"></fa-icon></div>
 </div>
