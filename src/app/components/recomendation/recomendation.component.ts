@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../../models/Game.model';
 import { GamesService } from '../../services/games.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGamepad, faKeyboard, faLaptopCode, faPowerOff, faRobot, faShapes, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faKeyboard, faLaptopCode, faPowerOff, faRobot, faShapes, faStarHalfStroke, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLink } from '@angular/router';
@@ -30,6 +30,8 @@ export class RecomendationComponent implements OnInit {
   faCategory = faShapes;
   faDevelopers = faLaptopCode;
   faPlatforms = faKeyboard;
+  faCheck = faCheck;
+  faExclamation = faExclamation;
   nameOfGame: string = '';
   gameSearched = new Game();
   searchStatus = 0;
@@ -41,10 +43,15 @@ export class RecomendationComponent implements OnInit {
   currentLastCover: number = (this.itemsPerPage) * 8;
   totalGames: any;
   @Input('user') userEmail!: string;
+  userName: String = "";
+  fireGameAlert: boolean = false;
+  fireAlreadyAddedAlert: boolean = false;
+  alertMessage: string = "";
 
   constructor(private gameService: GamesService, private userService: UsersService) {}
 
   ngOnInit() {
+    this.currentUser = this.userService.getCurrentUser();
     this.currentUser.email= this.userEmail;
     if (this.userEmail) {
       this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
@@ -110,8 +117,10 @@ export class RecomendationComponent implements OnInit {
     document.addEventListener("click", e => {
       const target = e.target as HTMLElement;
       if (target.classList.contains("game-card")) {
-        const dialog = target.querySelector('dialog');
-        dialog?.showModal();
+        const dialog = target.querySelector('dialog') as HTMLDialogElement;
+        if (dialog && !dialog.open) {
+          dialog.showModal();
+        }
       }
     })
   }
@@ -121,7 +130,9 @@ export class RecomendationComponent implements OnInit {
       const target = e.target as HTMLElement;
       if (target.parentElement != null) {
         const dialog = target.parentElement as HTMLDialogElement
-        dialog.close();
+        if (dialog && dialog.open) {
+          dialog.close();
+        }
       }
     })
   }
@@ -173,6 +184,18 @@ export class RecomendationComponent implements OnInit {
       if(!user.games?.includes(game)){
         user.games?.push(game);
         this.userService.updateUser(user);
+        this.alertMessage = `${game.name} añadido a la librería`
+        this.fireGameAlert = true;
+        setTimeout(() => {
+            this.fireGameAlert = false;
+        }, 2000);
+      } 
+      if (user.games?.includes(game)) {
+        this.alertMessage = `Ya tienes ${game.name} en tu librería`
+        this.fireAlreadyAddedAlert = true;
+        setTimeout(() => {
+            this.fireAlreadyAddedAlert = false;
+        }, 2000);
       }
     }).catch(error =>{
       console.log(error)

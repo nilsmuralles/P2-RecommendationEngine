@@ -60,6 +60,21 @@
     outline: 1px solid royalblue;
 }
 
+.invalid{
+    outline: 1px solid rgb(225, 65, 65);
+}
+
+.invalid-mesage{
+    color: rgb(225, 65, 65);
+    font-size: 1rem;
+    font-family: 'Segoe UI light';
+    font-weight: bold;
+}
+
+.main-card-invalid{
+    height: 500px;
+}
+
 .buttonspace{
     display: flex;
     justify-content: center;

@@ -11,7 +11,7 @@
         </nav>
         <div class="nav-options">
             <div *ngIf="userEmail; else elseNameFound">
-                <h2 class="nav-links">{{userEmail}}</h2>
+                <h2 class="nav-links">{{currentUser.name}}</h2>
               </div>
             <ng-template #elseNameFound>Anonimo</ng-template>
             
@@ -19,54 +19,9 @@
                 <a routerLink="/login"><fa-icon class="icon" [icon]="faLogOut"></fa-icon></a>
             </div>
         </div>
-    </header>
-    <div class="subcontainer" style="margin-bottom: 3rem; align-items: center;">
-        <form class="search-nav" (ngSubmit)="searchGame(searchForm)" #searchForm="ngForm">
-            <input class="search-bar" type="text" placeholder="Busca tus juegos aquí" [(ngModel)]="nameOfGame" name="nameOfGame">
-        </form>
-        <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
-            <div *ngIf="searchStatus != 404; else elseGameNotFound">
-                <div class="game-card" (click)="showGameInfo()">
-                    <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
-                        <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
-                    </div>
-                    <ng-template #elseImageFound>
-                        <img [src]="gameCovers[gameSearched.name]" alt="" loading="lazy">
-                    </ng-template>
-                    <h4>{{ gameSearched.name }}</h4>
-                    <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
-                    <dialog class="game-info">
-                        <button class="exit-game-info" (click)="exitGameInfo()">x</button>
-                        <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
-                            <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
-                        </div>
-                        <div class="info">
-                            <header>
-                                <h1>{{ gameSearched.name }}</h1>
-                                <h2>({{ gameSearched.released }})</h2>
-                            </header>
-                            <section>
-                                <h3 class="developers"><fa-icon [icon]="faDevelopers"></fa-icon><span>Developers</span>{{ gameSearched.developers }}</h3>
-                                <h3 class="genre"><fa-icon [icon]="faGenre"></fa-icon><span>Genre</span>{{ getGenre(gameSearched) }}</h3>
-                                <h3 class="platform"><fa-icon [icon]="faPlatforms"></fa-icon><span>Platform</span>{{ getPlatform(gameSearched) }}</h3>
-                                <h3 class="category"><fa-icon [icon]="faCategory"></fa-icon><span>Category</span>{{ getCategory(gameSearched) }}</h3>
-                            </section>
-                            <footer>
-                                <h5>{{ gameSearched.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
-                                <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
-                            </footer>
-                        </div>
-                    </dialog>
-                </div>
-            </div>
-            <ng-template #elseGameNotFound>
-                <h2>El juego no se encuentra en la base de datos</h2>
-            </ng-template>
-        </div>
-        <ng-template #elseGameNotSearched></ng-template>
-    </div>
+    </header>    
     <div class="subcontainer">
-        <h3 class="subtitle">¡Tenemos recomendaciones para ti!</h3>
+        <h3 class="subtitle" style="margin-top: 4rem;">¡Tenemos recomendaciones para ti!</h3>
         <section class="recommendation-container">
             <div class="track">
                 <div class="game-info" *ngFor="let game of recommendedGames">
@@ -101,6 +56,52 @@
         </div>
     </div>
     <div class = "subcontainer">
+        <div class="subcontainer" style="margin: auto; width: 100%;">
+            <form class="search-nav" (ngSubmit)="searchGame(searchForm)" #searchForm="ngForm">
+                <input class="search-bar" type="text" placeholder="Busca juegos aquí" [(ngModel)]="nameOfGame" name="nameOfGame">
+            </form>
+            <div *ngIf="gameSearched.name !='' || searchStatus == 404; else elseGameNotSearched">
+                <h3 class="subtitle" style="border:  none;">Resultados de tu búsqueda...</h3>
+                <div *ngIf="searchStatus != 404; else elseGameNotFound">
+                    <div class="game-card" (click)="showGameInfo()">
+                        <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
+                            <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                        </div>
+                        <ng-template #elseImageFound>
+                            <img [src]="gameCovers[gameSearched.name]" alt="" loading="lazy">
+                        </ng-template>
+                        <h4>{{ gameSearched.name }}</h4>
+                        <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
+                        <dialog class="game-info">
+                            <button class="exit-game-info" (click)="exitGameInfo()">x</button>
+                            <div *ngIf="gameCovers[gameSearched.name]==null; else elseImageFound">
+                                <img src="../../../assets/img/Cover image not found.png" alt="Cover not found">
+                            </div>
+                            <div class="info">
+                                <header>
+                                    <h1>{{ gameSearched.name }}</h1>
+                                    <h2>({{ gameSearched.released }})</h2>
+                                </header>
+                                <section>
+                                    <h3 class="developers"><fa-icon [icon]="faDevelopers"></fa-icon><span>Developers</span>{{ gameSearched.developers }}</h3>
+                                    <h3 class="genre"><fa-icon [icon]="faGenre"></fa-icon><span>Genre</span>{{ getGenre(gameSearched) }}</h3>
+                                    <h3 class="platform"><fa-icon [icon]="faPlatforms"></fa-icon><span>Platform</span>{{ getPlatform(gameSearched) }}</h3>
+                                    <h3 class="category"><fa-icon [icon]="faCategory"></fa-icon><span>Category</span>{{ getCategory(gameSearched) }}</h3>
+                                </section>
+                                <footer>
+                                    <h5>{{ gameSearched.rating }} <fa-icon [icon]="faStar"></fa-icon></h5>
+                                    <button class="add-btn" (click)="addToLibrary(gameSearched)">+</button>
+                                </footer>
+                            </div>
+                        </dialog>
+                    </div>
+                </div>
+                <ng-template #elseGameNotFound>
+                    <h2>El juego no se encuentra en la base de datos</h2>
+                </ng-template>
+            </div>
+            <ng-template #elseGameNotSearched></ng-template>
+        </div>
         <h3 class="subtitle">Juegos que podrían gustarte</h3>
         <section class="cards-container">
             <div class="game-card" *ngFor="let game of games | paginate: { itemsPerPage: itemsPerPage, currentPage: p }"(click)="showGameInfo()" >
@@ -140,4 +141,6 @@
     <footer class="pagination-controller">
         <pagination-controls previousLabel="" nextLabel="" (pageChange)="p = $event; checkForNextCovers(p)"></pagination-controls>
     </footer>
+    <div *ngIf="fireGameAlert" class="added-game-alert"><fa-icon [icon]="faCheck"></fa-icon> {{alertMessage}}</div>
+    <div *ngIf="fireAlreadyAddedAlert" class="has-game-alert"><fa-icon [icon]="faExclamation"></fa-icon> {{alertMessage}}</div>
 </div>

@@ -4,10 +4,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/User.model';
 import { UsersService } from '../../services/users.service';
 import { Router, RouterLink } from '@angular/router';
+import { NgClass, NgIf } from '@angular/common';
 @Component({
   selector: 'login-component',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, RouterLink],
+  imports: [FormsModule, HttpClientModule, RouterLink, NgClass, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -15,6 +16,7 @@ export class LoginComponent {
   userOnLogin = new User();
   usersService = inject(UsersService);
   status = 200;
+  loginFailed: boolean = false;
 
   constructor(private router: Router){}
 
@@ -23,10 +25,8 @@ export class LoginComponent {
       this.router.navigateByUrl(`/recomendation/${response.email}`)
       this.usersService.setCurrentUser(response);
     }).catch(error =>{
-      if(error.status == 401){
-        alert("Credenciales no válidas, intentelo de nuevo")
-      }else if (error.status == 500){
-        alert("Usuario no registrado")
+      if(error.status == 401 || error.status == 500){
+        this.loginFailed = true;
       }
     })
     loginForm.resetForm();

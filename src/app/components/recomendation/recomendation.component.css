@@ -424,3 +424,50 @@
     margin: 0;
     padding: 0;
 }
+
+.added-game-alert{
+    padding: 2rem;
+    background-color: var(--gray-bg-color);
+    color: var(--form-bg-color);
+    position: fixed;
+    margin: auto;
+    font-size: 1.5rem;
+    bottom: 5%;
+    padding-right: 3rem;
+    -webkit-box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    transition: bottom 0.3s ease-in-out;
+    z-index: 5;
+    border-left: solid #4ec652 5px;
+}
+
+.has-game-alert{
+    padding: 2rem;
+    background-color: var(--gray-bg-color);
+    color: var(--form-bg-color);
+    position: fixed;
+    margin: auto;
+    font-size: 1.5rem;
+    bottom: 5%;
+    padding-right: 3rem;
+    -webkit-box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    box-shadow: 0px 17px 35px -11px rgba(0,0,0,0.75);
+    transition: bottom 0.3s ease-in-out;
+    z-index: 5;
+    border-left: solid #c6b64e 5px;
+}
+
+.added-game-alert .ng-fa-icon{
+    width: fit-content;
+    color: #4ec652;
+    font-weight: bolder;
+}
+
+.has-game-alert .ng-fa-icon{
+    width: fit-content;
+    color: #c6b64e;
+    font-weight: bolder;
+    font-size: 1.8rem;
+}
