@@ -54,11 +54,15 @@ export class RecomendationComponent implements OnInit {
     this.currentUser = this.userService.getCurrentUser();
     this.currentUser.email= this.userEmail;
     if (this.userEmail) {
-      this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
-        this.recommendedGames = recommendations;
-        this.setOfRecomendedGames = recommendations.length;
-        this.loadRecommendedGamesCovers();
+      this.userService.getUserByEmail(this.userEmail).then(user =>{
+        this.currentUser = user
+        this.userService.getUsersRecommendations(this.currentUser, 6).subscribe(recommendations =>{
+          this.recommendedGames = recommendations;
+          this.setOfRecomendedGames = recommendations.length;
+          this.loadRecommendedGamesCovers();
+        });
       });
+      
 
       this.gameService.getAllGames().subscribe(games => {
         this.games = games
@@ -99,7 +103,7 @@ export class RecomendationComponent implements OnInit {
   }
   
   searchGame(searchForm: NgForm){
-    this.gameService.getGameByName(this.nameOfGame).subscribe((game) =>{
+    this.gameService.getGameByName(this.nameOfGame.trim()).subscribe((game) =>{
       this.gameSearched = game
     }, error =>{
       this.searchStatus = error.status

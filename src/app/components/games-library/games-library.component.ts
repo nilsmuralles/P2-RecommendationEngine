@@ -49,6 +49,8 @@ export class GamesLibraryComponent implements OnInit {
   constructor(private gameService: GamesService, private userService: UsersService) {}
 
   ngOnInit() {
+    this.currentUser = this.userService.getCurrentUser();
+    this.currentUser.email = this.userEmail
     if (this.userEmail) {
       this.userService.getUserByEmail(this.userEmail).then(user =>{
         this.currentUser = user
@@ -81,13 +83,19 @@ export class GamesLibraryComponent implements OnInit {
   }
 
   searchGame(searchForm: NgForm){
-    this.clearSearchResult();
-    this.gameService.getGameByName(this.nameOfGame).subscribe(game=>{
-      this.gameSearched = game
+    this.gameService.getGameByName(this.nameOfGame.trim()).subscribe((game) =>{
+      if(this.currentUser.games?.find(storedGame =>{if(storedGame.name == game.name) return true
+        else return false
+      })){
+        this.gameSearched = game
+      }else{
+        this.searchStatus = 404
+      }
     }, error =>{
       this.searchStatus = error.status
     });
     searchForm.resetForm();
+    this.clearSearchResult();
   }
 
   clearSearchResult(){
@@ -166,11 +174,15 @@ export class GamesLibraryComponent implements OnInit {
 
       } else {
         user.likedGames = user.likedGames?.filter(existingGame => existingGame.name !== game.name);
+
         this.alertMessage = `${game.name} ya no le gusta`;
       }
 
       this.userService.updateUser(user);
       this.fireGameAlert = true;
+
+      this.currentUser = user;
+
 
       setTimeout(() => {
         this.fireGameAlert = false;
@@ -179,5 +191,13 @@ export class GamesLibraryComponent implements OnInit {
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  isLiked(game: Game):boolean{
+    if(this.currentUser.likedGames?.find(likedGame=>{
+      if(likedGame.name == game.name) return true
+      else return false
+    })) return true
+    else return false
   }
 }

@@ -172,6 +172,24 @@
     cursor: pointer;
 }
 
+.add-btn-liked{
+    bottom: 0;
+    right: 0;
+    margin-right: 5%;
+    position: absolute;
+    height: 2.5rem;
+    transition: bottom 0.3s ease;
+    width: 2.5rem;
+    font-size: 1.5rem;
+    color: var(--form-bg-color);
+    border-radius: 50%;
+    z-index: -1;
+    border: 0;
+    background-color: #ff6893;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
 .add-btn:hover{
     color: var(--form-bg-color);
     background-color: #ff6893;
